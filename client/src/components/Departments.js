@@ -1,6 +1,6 @@
 import React, { useState, useEffect, } from 'react'
 import axios from 'axios';
-import { Header, Button, Card, } from 'semantic-ui-react';
+import { Header, Button, Card, Icon, } from 'semantic-ui-react';
 import { Link, } from 'react-router-dom';
 
 const Departments = (props) => {
@@ -13,6 +13,13 @@ const Departments = (props) => {
       })
   }, []);
 
+  const deleteDepartment = (id) => {
+    axios.delete(`/api/departments/${id}`)
+      .then( res => {
+        setDepartments({ departments: departments.filter( d => d.id !== id ), })
+      })
+  }
+
   const renderDepartment = () => {
     if (departments.length <= 0)
       return <Header as="h3">No Departments</Header>
@@ -22,9 +29,14 @@ const Departments = (props) => {
           <Card.Header>{department.name}</Card.Header>
         </Card.Content>
         <Card.Content>
-          <Button as={Link} to={`/departments/${department.id}`} color="blue">
-            View
-          </Button>
+          <Button.Group fluid>
+            <Button as={Link} to={`/departments/${department.id}`} color="blue">
+              View
+            </Button>
+            <Button icon color="red" onClick={() => deleteDepartment(`${department.id}`)}>
+              <Icon name="trash"/> Delete
+            </Button>
+          </Button.Group>
         </Card.Content>
       </Card>
     ));

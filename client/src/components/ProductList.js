@@ -30,7 +30,7 @@ const ProductList = (props) => {
 
   return(
     <div>
-      <Header as="h1" textAlign="center">Departments</Header>
+      <Header as="h1" textAlign="center">Products</Header>
       <hr/>
       <Button as={Link} to={`/departments/${props.department_id}/products/new`}>Add A Product</Button>
       <br/>

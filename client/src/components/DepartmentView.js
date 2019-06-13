@@ -26,7 +26,7 @@ class DepartmentView extends React.Component {
           <Segment>
             <ProductList department_id={id}/>
           </Segment>
-          <Button onClick={this.props.history.goBack}>
+          <Button onClick={() => this.props.history.push("/departments")}>
             Back
           </Button>
         </Segment>

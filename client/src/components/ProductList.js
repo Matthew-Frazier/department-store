@@ -1,6 +1,6 @@
 import React, { useState, useEffect, } from 'react'
 import axios from 'axios';
-import { Header, Button, Card, } from 'semantic-ui-react';
+import { Header, Button, Card, Icon, } from 'semantic-ui-react';
 import { Link, } from 'react-router-dom';
 
 const ProductList = (props) => {
@@ -14,6 +14,14 @@ const ProductList = (props) => {
       })
   }, []);
 
+  const deleteProduct = (id) => {
+    const department_id = props.department_id
+    axios.delete(`/api/departments/${department_id}/products/${id}`)
+      .then( res => {
+        setProducts(products.filter(d => d.id !== id))
+      })
+  }
+
   const renderProducts = () => {
     if (products.length <= 0)
       return <Header as="h3">No Products</Header>
@@ -23,6 +31,9 @@ const ProductList = (props) => {
           <Card.Header>{product.name}</Card.Header>
           <p>{product.description}</p>
           <Card.Header as="h3">${product.price}</Card.Header>
+          <Button floated="right" icon color="red" onClick={() => deleteProduct(product.id)}>
+            <Icon name="trash"/> Delete
+          </Button>
         </Card.Content>
       </Card>
     ));
